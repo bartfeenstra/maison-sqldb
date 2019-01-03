@@ -8,23 +8,14 @@ services:
 addons:
   apt:
     packages:
-    - apache2-utils
     - shellcheck
-  hosts:
-    - ci.maison
-    - consul.maison
-    - vcs.maison
-    - network.maison
-    - ola.maison
-    - hab.maison
 
 before_install:
   - sudo /etc/init.d/mysql stop
 
 before_script:
-  - ./bin/build-dev
+  - ./bin/build
   - ./bin/start
-  - ./bin/migrate
 
 script:
   - ./bin/test
