@@ -4,7 +4,11 @@ set -Eeuo pipefail
 
 cd "$(dirname "$0")/.."
 
+./bin/await
+
+set +a
 . ./.env
+set -a
 
 container_ip=$(docker network inspect -f '{{range .IPAM.Config}}{{.Gateway}}{{end}}' bridge)
-./vendor/wait-for-it "$container_ip:3306"
+mysql -h "$container_ip" -u root "-p$MAISON_SQLDB_ROOT_PASSWORD"
